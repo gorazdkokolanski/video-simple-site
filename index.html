@@ -140,7 +140,7 @@
 
   <aside class="video">
     <!-- Optimized local video for fastest loading -->
-    <img src="vids/placeholder.jpg" alt="Video placeholder" class="placeholder">
+    <img src="vids/placeholder.jpg" alt="Video placeholder" class="placeholder" loading="eager" fetchpriority="high">
     <video 
       autoplay
       muted 
@@ -164,9 +164,22 @@
   </main>
     
 <script>
-// Handle Safari autoplay restrictions
+// Handle Safari autoplay restrictions and image loading
 document.addEventListener('DOMContentLoaded', function() {
   const video = document.querySelector('video');
+  const placeholder = document.querySelector('.placeholder');
+  
+  // Debug image loading
+  if (placeholder) {
+    placeholder.addEventListener('load', () => {
+      console.log('Placeholder image loaded successfully');
+    });
+    placeholder.addEventListener('error', (e) => {
+      console.error('Placeholder image failed to load:', e);
+      // Try to reload with different approach
+      placeholder.src = 'vids/placeholder.jpg?' + Date.now();
+    });
+  }
   
   // Try to play the video
   const playPromise = video.play();
