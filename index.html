@@ -146,11 +146,13 @@
       muted 
       loop 
       playsinline
+      webkit-playsinline
       preload="metadata"
       width="233" 
       height="311"
       title="Arc video background">
       <source src="vids/people.mp4" type="video/mp4">
+      Your browser does not support the video tag.
     </video>
   </aside>
 
@@ -161,6 +163,33 @@
     </p>
   </main>
     
+<script>
+// Handle Safari autoplay restrictions
+document.addEventListener('DOMContentLoaded', function() {
+  const video = document.querySelector('video');
+  
+  // Try to play the video
+  const playPromise = video.play();
+  
+  if (playPromise !== undefined) {
+    playPromise.then(() => {
+      // Video started playing successfully
+      console.log('Video is playing');
+    }).catch(error => {
+      // Autoplay was prevented - show fallback or handle user interaction
+      console.log('Autoplay prevented:', error);
+      
+      // Optional: Add a click handler to start video on user interaction
+      document.addEventListener('click', function startVideo() {
+        video.play().then(() => {
+          console.log('Video started after user interaction');
+        });
+        document.removeEventListener('click', startVideo);
+      }, { once: true });
+    });
+  }
+});
+</script>
     
 </body>
 </html>
