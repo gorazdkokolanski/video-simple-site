@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Arc-style Layout</title>
+  <style>
+    @font-face {
+      font-family: 'Cerebri Sans Pro';
+      src: url('./Cerebri-Sans-Pro/CerebriSansPro-Regular.ttf') format('truetype');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Cerebri Sans Pro';
+      src: url('./Cerebri-Sans-Pro/CerebriSansPro-Medium.ttf') format('truetype');
+      font-weight: 500;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Cerebri Sans Pro';
+      src: url('./Cerebri-Sans-Pro/CerebriSansPro-SemiBold.ttf') format('truetype');
+      font-weight: 600;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Cerebri Sans Pro';
+      src: url('./Cerebri-Sans-Pro/CerebriSansPro-Bold.ttf') format('truetype');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    :root {
+      --page-padding: 24px;
+      --max-video-width: 360px;
+      --max-video-height: 460px;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      height: 100%;
+      margin: 0;
+      font-family: "Cerebri Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: #111;
+    }
+    body {
+      display: grid;
+      grid-template-areas:
+        "topleft topright"
+        "bottomleft topright";
+      grid-template-columns: 1fr auto;
+      grid-template-rows: auto 1fr;
+      padding: var(--page-padding);
+      gap: 0;
+    }
+
+    /* Top-left navigation */
+    .nav { grid-area: topleft; align-self: start; }
+    .nav ul { list-style: none; padding: 0; margin: 0; width: 141px; }
+    .nav li { padding: 4px 0; border-bottom: 1px solid black; text-align: right; }
+    .nav a { text-decoration: none; color: black; font-size: 13px; font-weight: 400; }
+
+    /* Bottom-left large text */
+    .hero {
+      grid-area: bottomleft;
+      align-self: end;
+      max-width: 860px;
+      font-size: 36px;
+      font-weight: 400;
+      line-height: 1.25;
+    }
+
+    /* Top-right video */
+    .video { grid-area: topright; align-self: start; justify-self: end; position: relative;      width: 233px;
+      height: 311px; overflow: hidden; }
+    .video video {
+      width: 105%;
+      height: auto;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 0px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .video::before{
+      content: "Arc";
+      left: -120px;
+      top: 0;
+      position: absolute;
+    }
+
+    /* Stack layout on small screens */
+    @media (max-width: 800px) {
+      body {
+        grid-template-areas:
+          "topleft topright"
+          "bottomleft bottomleft";
+        grid-template-columns: 1fr auto;
+        grid-template-rows: auto auto;
+      }
+      .hero { margin-top: 48px; align-self: start; }
+      .video video { 
+        width: min(233px, 80vw); 
+        height: min(311px, calc(80vw * 4/3)); 
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav" aria-label="Primary">
+    <ul>
+      <li><a href="#">Waitlist</a></li>
+      <li><a href="#">Careers</a></li>
+      <li><a href="#">Blog</a></li>
+    </ul>
+  </nav>
+
+  <aside class="video">
+    <!-- preload set to metadata to avoid downloading all 2GB up front -->
+    <video src="vids/people.mp4" id="heroVideo" autoplay muted playsinline loop preload="metadata"></video>
+  </aside>
+
+  <main class="hero">
+    <p>
+      Arc is reimagining the ecosystem around trauma support to make effective care radically accessible.
+      We’re working towards a world where remission is not just possible, but probable.
+    </p>
+  </main>
+    
+    
+</body>
+</html>
