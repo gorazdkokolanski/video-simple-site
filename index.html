@@ -147,11 +147,11 @@
       loop 
       playsinline
       webkit-playsinline
-      preload="metadata"
+      preload="auto"
       width="233" 
       height="311"
       title="Arc video background">
-      <source src="vids/people.mp4" type="video/mp4">
+      <source src="vids/people.mp4" type="video/mp4; codecs=avc1.42E01E">
       Your browser does not support the video tag.
     </video>
   </aside>
@@ -164,42 +164,55 @@
   </main>
     
 <script>
-// Handle Safari autoplay restrictions and image loading
+// Handle Safari autoplay restrictions and video loading
 document.addEventListener('DOMContentLoaded', function() {
   const video = document.querySelector('video');
   const placeholder = document.querySelector('.placeholder');
   
-  // Debug image loading
-  if (placeholder) {
-    placeholder.addEventListener('load', () => {
-      console.log('Placeholder image loaded successfully');
+  // Debug video loading
+  if (video) {
+    video.addEventListener('loadstart', () => {
+      console.log('Video loading started');
     });
-    placeholder.addEventListener('error', (e) => {
-      console.error('Placeholder image failed to load:', e);
-      // Try to reload with different approach
-      placeholder.src = 'vids/placeholder.jpg?' + Date.now();
+    video.addEventListener('loadedmetadata', () => {
+      console.log('Video metadata loaded');
+    });
+    video.addEventListener('loadeddata', () => {
+      console.log('Video data loaded');
+    });
+    video.addEventListener('canplay', () => {
+      console.log('Video can start playing');
+    });
+    video.addEventListener('error', (e) => {
+      console.error('Video failed to load:', e);
     });
   }
   
-  // Try to play the video
-  const playPromise = video.play();
-  
-  if (playPromise !== undefined) {
-    playPromise.then(() => {
-      // Video started playing successfully
-      console.log('Video is playing');
-    }).catch(error => {
-      // Autoplay was prevented - show fallback or handle user interaction
-      console.log('Autoplay prevented:', error);
+  // Force Safari to load the video
+  if (video) {
+    // Safari sometimes needs this to trigger loading
+    video.load();
+    
+    // Try to play after a short delay to ensure video is ready
+    setTimeout(() => {
+      const playPromise = video.play();
       
-      // Optional: Add a click handler to start video on user interaction
-      document.addEventListener('click', function startVideo() {
-        video.play().then(() => {
-          console.log('Video started after user interaction');
+      if (playPromise !== undefined) {
+        playPromise.then(() => {
+          console.log('Video is playing');
+        }).catch(error => {
+          console.log('Autoplay prevented:', error);
+          
+          // Add click handler for user interaction
+          document.addEventListener('click', function startVideo() {
+            video.play().then(() => {
+              console.log('Video started after user interaction');
+            });
+            document.removeEventListener('click', startVideo);
+          }, { once: true });
         });
-        document.removeEventListener('click', startVideo);
-      }, { once: true });
-    });
+      }
+    }, 100);
   }
 });
 </script>
