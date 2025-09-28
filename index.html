@@ -101,10 +101,14 @@
       z-index: 1;
     }
 
-    .video::before{
+    body{
+      position: relative;
+    }
+
+    body::before{
       content: "Arc";
-      left: -120px;
-      top: 0;
+      right: 330px;
+      top: 25px;
       position: absolute;
     }
 
@@ -138,7 +142,7 @@
     <!-- Optimized local video for fastest loading -->
     <img src="vids/placeholder.jpg" alt="Video placeholder" class="placeholder">
     <video 
-      autoplay 
+      autoplay
       muted 
       loop 
       playsinline
