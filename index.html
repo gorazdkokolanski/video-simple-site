@@ -86,6 +86,19 @@
       border-radius: 0px;
       object-fit: cover;
       display: block;
+      z-index: 2;
+    }
+    .video .placeholder {
+      width: 105%;
+      height: auto;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 0px;
+      object-fit: cover;
+      display: block;
+      z-index: 1;
     }
 
     .video::before{
@@ -123,6 +136,7 @@
 
   <aside class="video">
     <!-- Optimized local video for fastest loading -->
+    <img src="vids/placeholder.jpg" alt="Video placeholder" class="placeholder">
     <video 
       autoplay 
       muted 
