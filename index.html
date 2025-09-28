@@ -122,18 +122,18 @@
   </nav>
 
   <aside class="video">
-    <!-- Optimized Vimeo iframe for fastest loading -->
-    <iframe 
-      src="https://player.vimeo.com/video/1122692295?autoplay=1&muted=1&loop=1&background=1&title=0&byline=0&portrait=0&controls=0&autopause=0&quality=auto&dnt=1" 
+    <!-- Optimized local video for fastest loading -->
+    <video 
+      autoplay 
+      muted 
+      loop 
+      playsinline
+      preload="metadata"
       width="233" 
-      height="311" 
-      frameborder="0" 
-      allow="autoplay; fullscreen" 
-      allowfullscreen
-      title="Arc video background"
-      loading="eager"
-      fetchpriority="high">
-    </iframe>
+      height="311"
+      title="Arc video background">
+      <source src="vids/people.mp4" type="video/mp4">
+    </video>
   </aside>
 
   <main class="hero">
