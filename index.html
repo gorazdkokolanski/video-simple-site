@@ -60,8 +60,8 @@
     /* Top-left navigation */
     .nav { grid-area: topleft; align-self: start; }
     .nav ul { list-style: none; padding: 0; margin: 0; width: 141px; }
-    .nav li { padding: 4px 0; border-bottom: 1px solid black; text-align: right; }
-    .nav a { text-decoration: none; color: black; font-size: 13px; font-weight: 400; }
+    .nav li { padding: 4px 0; border-bottom: 0.5px solid black; text-align: right; }
+    .nav a { text-decoration: none; color: black; font-size: 12px; font-weight: 400; }
 
     /* Bottom-left large text */
     .hero {
@@ -71,6 +71,7 @@
       font-size: 36px;
       font-weight: 400;
       line-height: 1.25;
+      margin-bottom: 10px;
     }
 
     /* Top-right video */
@@ -103,12 +104,15 @@
 
     body{
       position: relative;
+      padding: 60px;
+      padding-right: 10px;
     }
 
     body::before{
       content: "Arc";
       right: 330px;
-      top: 25px;
+      top: 60px;
+      font-size: 12px;
       position: absolute;
     }
 
